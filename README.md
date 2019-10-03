@@ -1,7 +1,7 @@
 # Compsci Learning Experiments (Java)
 
-**Author:** Xano Sweeting
-**License:** MIT
+**Author:** Xano Sweeting  
+**License:** MIT  
 **Created:** 2019-10-02
 
 ## Setup
