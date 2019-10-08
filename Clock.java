@@ -40,4 +40,8 @@ public class Clock{
 			hour %= 12;
 	}
 	//I'm not sure how to do the tostring() method but this is everything else
+	public String toString () {
+    		return this.hour + ":" + this.minute + ":" this.second;
+	}
+
 }
