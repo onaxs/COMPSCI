@@ -4,18 +4,18 @@ public class Die{
 
 
 	public Die(){
-		numOfFaces = 6;
-		getFaceNum();
+	    numOfFaces = 6;
+	    getFaceNum();
 	}
 
 	public Die(int nF){
-		numOfFaces = nF;
-		getFaceNum();	
+	    numOfFaces = nF;
+	    getFaceNum();	
 	}
 
 	public int getFaceValue(){
-	faceValue = Math.random()*numOfFaces + 1;
-	return faceValue;
+	    faceValue = (Math.random()*numOfFaces + 1);
+	    return faceValue;
 	}
 	
 	public int getNumOfFaces(){
@@ -23,7 +23,7 @@ public class Die{
 	}
 	
 	public int roll(){
-		faceValue = Math.random()*numOfFaces + 1;
+		faceValue = (Math.random()*numOfFaces + 1);
 		return faceValue;
 	}
 
