@@ -16,10 +16,10 @@ public class leapYearCalculator{
 			leap = false;
 		}
 		if(leap==true){
-			System.out.println(year+" Is a leap year");
+			System.out.println(year+" is a leap year");
 		}
 		else{
-			System.out.println(year+" Is not a leap year");
+			System.out.println(year+" is not a leap year");
 		}
 	}
 }
