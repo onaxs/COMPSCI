@@ -34,10 +34,10 @@ public class Coin{
 
   public String toString(){
     if(faceValueHead == true){
-      return "True";
+      return "Head";
     }
     else{
-      return "False";
+      return "Tail";
     } 
   }
 
