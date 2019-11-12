@@ -5,16 +5,16 @@ public class Die{
 
 	public Die(){
 	    numOfFaces = 6;
-	    getFaceNum();
+	    getFaceValue();
 	}
 
 	public Die(int nF){
 	    numOfFaces = nF;
-	    getFaceNum();	
+	    getFaceValue();	
 	}
 
 	public int getFaceValue(){
-	    faceValue = (Math.random()*numOfFaces + 1);
+	    faceValue = (int)(Math.random()*numOfFaces + 1);
 	    return faceValue;
 	}
 	
@@ -23,7 +23,7 @@ public class Die{
 	}
 	
 	public int roll(){
-		faceValue = (Math.random()*numOfFaces + 1);
+		faceValue = (int)(Math.random()*numOfFaces + 1);
 		return faceValue;
 	}
 

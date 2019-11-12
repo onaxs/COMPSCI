@@ -10,7 +10,7 @@ public class Clock{
 		second = 0;
 	}
 
-	public Clock(h,m,s){
+	public Clock(int h,int m,int s){
 		hour = h;
 		minute = m;
 		second = s;
@@ -36,12 +36,13 @@ public class Clock{
 
 	public void addHour(){
 		hour += 1;
-		if hour > 12
+		if (hour > 12){
 			hour %= 12;
+    }
 	}
 	//I'm not sure how to do the tostring() method but this is everything else
-	public String toString () {
-    		return this.hour + ":" + this.minute + ":" this.second;
+	public String toString(){
+    		return (this.hour + ":" + this.minute + ":" + this.second);
 	}
 
 }
