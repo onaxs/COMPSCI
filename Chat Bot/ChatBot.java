@@ -13,27 +13,36 @@ public class ChatBot{
   }
 
 
-  public String greeting(){
-    return("How may I be of assitance master?");
-  }
 
   public String getUsername(){
     return username;
   }
   
-  public void setUsername(n){
+  public void setUsername(String n){
     username = n;
   }
 
-  public void setAge(a){
+  public void setAge(int a){
     age = a;
   }
+
+
+  public String greeting(){
+    return("How may I be of assitance master?");
+  }
+
+  public String goodBye(String phrase){
+    return "farewell master " + getUsername();
+  }
+
 
   public String howResponse(String phrase){
     if(phrase.contains("old")&&phrase.contains("you")){
       return "I only remember the last few centuries...";
     }
-    else if()
+    else if(){
+      
+    }
   }
 
   public String whatResponse(String phrase){
@@ -53,9 +62,6 @@ public class ChatBot{
     }
   }
 
-  public String goodBye(String phrase){
-    return "farewell master " + getUsername();
-  }
 
 
 
