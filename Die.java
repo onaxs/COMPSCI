@@ -1,3 +1,4 @@
+/*
 public class Die{
 	int numOfFaces;
 	int faceValue;

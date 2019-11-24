@@ -1,3 +1,4 @@
+/*
 public class Clock{
 	int hour;
 	int minute;

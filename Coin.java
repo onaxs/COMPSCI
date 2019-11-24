@@ -1,3 +1,4 @@
+/*
 public class Coin{
   boolean faceValueHead;
   static int numOfCoins = 0;

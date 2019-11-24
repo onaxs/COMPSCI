@@ -1,3 +1,4 @@
+/*
 public class DieTest{
   public static void main(String [] args){
 	  Die o1 = new Die(6);

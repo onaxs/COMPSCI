@@ -16,29 +16,64 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>src/BankAccount.java</name>
+			<type>1</type>
+			<location>//home/runner/BankAccount.java</location>
+		</link>
+		<link>
 			<name>src/Bot Tester.java</name>
 			<type>1</type>
 			<location>//home/runner/Chat Bot/Bot Tester.java</location>
 		</link>
 		<link>
-			<name>src/Bot.java</name>
-			<type>1</type>
-			<location>/home/runner/Chat Bot/Bot.java</location>
-		</link>
-		<link>
 			<name>src/ChatBot.java</name>
 			<type>1</type>
-			<location>/home/runner/Chat Bot/ChatBot.java</location>
+			<location>//home/runner/Chat Bot/ChatBot.java</location>
+		</link>
+		<link>
+			<name>src/Clock.java</name>
+			<type>1</type>
+			<location>//home/runner/Clock.java</location>
+		</link>
+		<link>
+			<name>src/Coin.java</name>
+			<type>1</type>
+			<location>//home/runner/Coin.java</location>
+		</link>
+		<link>
+			<name>src/CoinTester.java</name>
+			<type>1</type>
+			<location>//home/runner/CoinTester.java</location>
+		</link>
+		<link>
+			<name>src/Complex.java</name>
+			<type>1</type>
+			<location>//home/runner/Complex.java</location>
+		</link>
+		<link>
+			<name>src/Die.java</name>
+			<type>1</type>
+			<location>//home/runner/Die.java</location>
+		</link>
+		<link>
+			<name>src/DieTest.java</name>
+			<type>1</type>
+			<location>//home/runner/DieTest.java</location>
 		</link>
 		<link>
 			<name>src/Main.java</name>
 			<type>1</type>
-			<location>/home/runner/Main.java</location>
+			<location>//home/runner/Main.java</location>
 		</link>
 		<link>
-			<name>src/whiteboard.java</name>
+			<name>src/Nested For Loops.java</name>
 			<type>1</type>
-			<location>//home/runner/Chat Bot/whiteboard.java</location>
+			<location>//home/runner/Nested For Loops.java</location>
+		</link>
+		<link>
+			<name>src/leapYearCalculator.java</name>
+			<type>1</type>
+			<location>//home/runner/leapYearCalculator.java</location>
 		</link>
 	</linkedResources>
 </projectDescription>

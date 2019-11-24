@@ -1,5 +1,5 @@
 //testing class built by Huo Chen; Last Update 11/5/2018
-
+/*
 public class CoinTester
 {
   public static void main(String[] args)
