@@ -1,3 +1,9 @@
+// Chatbot program that learns the user's name, answers simple questions, and does math.
+// Xano Sweeting 2019-11-22
+//
+// Usage:
+//     javac ChatBot.java && java ChatBot
+
 import java.util.Scanner;
 import java.util.Random;
 import java.util.List;
@@ -5,13 +11,12 @@ import java.util.ArrayList;
 
 
 public class ChatBot {
-  // Info about the bot (never changed)
+  // Info about the bot (static after class init)
   private String bot_name;
   private String bot_origin;
   private int bot_age = 16;
     
-  // Info about the person chatting with the bot
-  // (updated once we learn their name)
+  // Info about the person chatting with the bot (updated via user msgs)
   private String user_name = "Mr. mystery person";
 
   // Constructor
@@ -27,11 +32,14 @@ public class ChatBot {
   // given a string and a list of substring patterns to look for
   // return true of any of the patterns are in the string
   private Boolean matches(String message, String ... patterns) {
+    // for each pattern we're looking for
     for (String pattern: patterns) {
+      // if the pattern is present in the string, return true
       if (message.indexOf(pattern) > -1) {
         return true;
       }
     }
+    // otherwise no patterns matched, return false
     return false;
   }
 
