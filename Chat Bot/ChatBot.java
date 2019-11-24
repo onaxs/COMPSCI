@@ -1,5 +1,8 @@
 import java.util.Scanner;
 import java.util.Random;
+import java.util.List;
+import java.util.ArrayList;
+
 
 public class ChatBot {
   // Info about the bot (never changed)
@@ -9,7 +12,7 @@ public class ChatBot {
     
   // Info about the person chatting with the bot
   // (updated once we learn their name)
-  private String user_name = "Mystery person";
+  private String user_name = "Mr. mystery person";
 
   // Constructor
   public ChatBot(String n, String o, int a) {
@@ -20,29 +23,27 @@ public class ChatBot {
 
   /* **************************************************** */
   // Message Parsing Helpers
-  private Boolean isQuestion(String message) {
-    return message.contains("?");
-  }
 
-  // given a string and a list of substring patterns
-  // look for the first occurence of each pattern and return the index of the first match
-  // if none are found, return null
-  private Integer findOperator(String message, String ... patterns) {
+  // given a string and a list of substring patterns to look for
+  // return true of any of the patterns are in the string
+  private Boolean matches(String message, String ... patterns) {
     for (String pattern: patterns) {
-      int idx = message.indexOf(pattern);
-      if (idx > 0) {return idx;}
+      if (message.indexOf(pattern) > -1) {
+        return true;
+      }
     }
-    return null;
+    return false;
   }
 
   // given a string containing some ints, return a list of the ints
-  private int[] parseNumbers(String message) {
+  private List<Integer> parseNumbers(String message) {
     // e.g. "123 abc 345 def 346. 989"
     //  -> [123, 345, 346, 989]
-    Scanner scanner = new Scanner(message);
     List<Integer> list = new ArrayList<Integer>();
-    while (scanner.hasNextInt()) {
-        list.add(scanner.nextInt());
+    Scanner line = new Scanner(message);
+    line.useDelimiter("\\D+");
+    while (line.hasNextInt()) {
+      list.add(line.nextInt());
     }
     return list;
   }
@@ -50,11 +51,12 @@ public class ChatBot {
   /* **************************************************** */
   // Handlers for the different types of messages
 
-  // Hello, my name is <username>.                -> "Hello <username>. Nice to meet you"
+  // Hello, my name is <username>.                -> "Hello <username>. Nice to meet you."
   private String parseUserNameStatement(String message) {
-    if (message.contains("Hello") || message.contains("Hi") && !isQuestion(message)) {
-      // TODO: parse the users name
-      user_name = "Mr. Teacher person";
+    if (matches(message, "my name is ", "I'm called ", "you can call me ")) {
+      // take the last word in the message and save it as their name
+      // (punctuation is already chopped off at the beginning of parse())
+      user_name = message.substring(message.lastIndexOf(" ") + 1);
 
       return "Hello " + user_name + ". Nice to meet you.";
     }
@@ -64,19 +66,16 @@ public class ChatBot {
   // What is your name?                           -> <name>
   // Can I have your name please?                 -> <name>
   private String parseBotNameQuestion(String message) {
-    if (message.contains("name")
-        || (message.contains("call")
-            && message.contains("you"))) {
-
-      return "My name is Dobby the elf";
+    if (matches(message, "your name", "what should I call you")) {
+      return "My name is " + bot_name + ".";
     }
     return null;
   }
 
   // How old are you?                             -> <age>
   private String parseBotAgeQuestion(String message) {
-    if (message.contains("old") && message.contains("you")) {
-      return "I was created in 2003 ... so 16.";
+    if (matches(message, "old are you", "your age")) {
+      return "I am " + bot_age + " years old.";
     }
     return null;
   }
@@ -84,18 +83,14 @@ public class ChatBot {
   // Where are you from?                          -> <location>
   // Are you from <location>?                     -> Yes/No
   private String parseBotOriginQuestion(String message) { 
-    if (message.contains("you")) {
-      if (message.contains("go")) {
-        return "I return to ... the cloud";
-      }
-      else if (message.contains("live")) {
-        return "I live in ... the cloud";
-      }
-      else if (message.contains("from")) {
-        return "I am from Hogwarts";
-      }
-      else if (message.contains("are")) {
-        return "I am currently in the cloud above you";
+    if (matches(message, "where are you from", "where were you born")) {
+      return "I am from " + bot_origin + ".";
+    }
+    if (matches(message, "are you from ")) {
+      if (matches(message, bot_origin.toLowerCase())) {
+        return "Yes";
+      } else {
+        return "No";
       }
     }
     return null;
@@ -105,43 +100,47 @@ public class ChatBot {
   // What is the answer of <num> <op> <num>?      -> <answer>
   // Can you tell me what <num> <op> <num> is?    -> <answer>
   private String parseMathQuestion(String message) {
-    Integer answer = null;
-    Integer op_idx = null;
-    int[] nums = parseNumbers(message);
+    List<Integer> nums = parseNumbers(message);
+    int a;
+    int b;
 
-    // math questions must have exactly two integers in them, otherwise fail early
-    if (nums.length != 2) {return null;}
-
+    // math questions must have exactly two integers in them
+    if (nums.size() == 2) {
+      a = nums.get(0);
+      b = nums.get(1);
+    } else {
+      // otherwise return null, we cant handle it as a math question.
+      return null;
+    }
+    
     // handle addition
-    if (findOperator(message, " plus ", " + ")) {
-      return "It is " + (nums[0] + nums[1]) + ".";
+    if (matches(message, " plus ", " + ")) {
+      return "It is " + (a + b) + ", " + user_name + ".";
     };
 
     // handle subtraction
-    if (findOperator(message, " minus ", " - ")) {
-      return "It is " + (nums[0] - nums[1]) + ".";
+    if (matches(message, " minus ", " - ")) {
+      return "It is " + (a - b) + ", " + user_name + ".";
     }
 
     // handle multiplication
-    if (findOperator(message, " times ", " multiplied by ", " * ", " x ")) {
-      return "It is " + (nums[0] * nums[1]) + ".";
+    if (matches(message, " times ", " multiplied by ", " * ", " x ")) {
+      return "It is " + (a * b) + ", " + user_name + ".";
     }
 
     // handle division
-    if (findOperator(message, " divided by ", " / ")) {
-      return "It is " + (nums[0] / nums[1]) + ".";
+    if (matches(message, " divided by ", " / ")) {
+      return "It is " + (a / b) + ", " + user_name + ".";
     }
     
-    // otherwise return null response so we continue down the list in parse()
-    // and try the next possible handler
     return null;
   }
 
   // What is ____?                                -> "Not sure..."
   private String parseWhatQuestion(String message) {
     // handle random question with suggestion to google it
-    if (message.startsWith("What ")) {
-      return "Say 'what?' again motherfucker, I dare you!";
+    if (message.startsWith("what ")) {
+      return "Say 'what?' again motherfucker, I dare you " + user_name + "!";
     }
     return null;
   }
@@ -161,47 +160,64 @@ public class ChatBot {
     java.util.Random random = new java.util.Random();
     int random_idx = random.nextInt(random_funny_messages.length);
     return random_funny_messages[random_idx];
-
-    // return "There’s a passage I got memorized. Ezekiel 25:17. “The path of the righteous man is beset on all sides by the inequities of the selfish and the tyranny of evil men. Blessed is he who, in the name of charity and good will, shepherds the weak through the valley of the darkness, for he is truly his brother’s keeper and the finder of lost children. And I will strike down upon thee with great vengeance and furious anger those who attempt to poison and destroy My brothers. And you will know I am the Lord when I lay My vengeance upon you.” Now… I been sayin’ that shit for years. And if you ever heard it, that meant your ass. You’d be dead right now. I never gave much thought to what it meant. I just thought it was a cold-blooded thing to say to a motherfucker before I popped a cap in his ass. But I saw some shit this mornin’ made me think twice. See, now I’m thinking: maybe it means you’re the evil man. And I’m the righteous man. And Mr. 9mm here… he’s the shepherd protecting my righteous ass in the valley of darkness. Or it could mean you’re the righteous man and I’m the shepherd and it’s the world that’s evil and selfish. And I’d like that. But that shit ain’t the truth. The truth is you’re the weak. And I’m the tyranny of evil men. But I’m tryin’," + user_name + ". I’m tryin’ real hard to be the shepherd."
   }
 
   /* **************************************************** */
   // higher level method that parses the user's message
   // and returns a response using the first handler that matches
   public String parse(String message) {
+    // Detect if their message is a question or statemnt
+    Boolean is_question = message.endsWith("?");
+    Boolean is_statement = message.endsWith(".");
+    if (is_question || is_statement) {
+      // Strip off trailing punctuation to make it easier to parse later
+      message = message.substring(0, message.length() - 1);
+      // Convert it to lowercase to make it easier to parse later
+      message = message.toLowerCase();
+    } else {
+      // Force the user to be explicit rather than trying to guess
+      return "Please end your lines with either a period or question mark.";
+    }
+
+    // Try all of the various message handlers in order.
+    // Return the first one that has a non-null response.
     String response = null;
 
-    // Try all of the various message handlers in order
+    // Handle Questions
+    if (is_question) {
+      // What is your name?                           -> <name>
+      // Can I have your name please?                 -> <name>
+      response = parseBotNameQuestion(message);
+      if (response != null) {return response;}
 
-    // Hello, my name is <username>.                -> "Hello <username>. Nice to meet you"
-    response = parseUserNameStatement(message);
-    if (response != null) {return response;}
+      // How old are you?                             -> <age>
+      response = parseBotAgeQuestion(message);
+      if (response != null) {return response;}
 
-    // What is your name?                           -> <name>
-    // Can I have your name please?                 -> <name>
-    response = parseBotNameQuestion(message);
-    if (response != null) {return response;}
+      // Where are you from?                          -> <location>
+      // Are you from <location>?                     -> Yes/No
+      response = parseBotOriginQuestion(message);
+      if (response != null) {return response;}
 
-    // How old are you?                             -> <age>
-    response = parseBotAgeQuestion(message);
-    if (response != null) {return response;}
+      // What is <num> <op> <num>?                    -> <answer>
+      // What is the answer of <num> <op> <num>?      -> <answer>
+      // Can you tell me what <num> <op> <num> is?    -> <answer>
+      response = parseMathQuestion(message);
+      if (response != null) {return response;}
 
-    // Where are you from?                          -> <location>
-    // Are you from <location>?                     -> Yes/No
-    response = parseBotOriginQuestion(message);
-    if (response != null) {return response;}
+      // What is ____?                                -> "Not sure..."
+      response = parseWhatQuestion(message);
+      if (response != null) {return response;}
+    }
 
-    // What is <num> <op> <num>?                    -> <answer>
-    // What is the answer of <num> <op> <num>?      -> <answer>
-    // Can you tell me what <num> <op> <num> is?    -> <answer>
-    response = parseMathQuestion(message);
-    if (response != null) {return response;}
+    // Handle statements
+    else {
+      // Hello, my name is <username>.                -> "Hello <username>. Nice to meet you"
+      response = parseUserNameStatement(message);
+      if (response != null) {return response;}
+    }
 
-    // What is ____?                                -> "Not sure..."
-    response = parseWhatQuestion(message);
-    if (response != null) {return response;}
-
-    // Uknown message                               -> random funny thing
+    // Handle nnknown messages
     return parseUnknownMessage(message);
   }
 
@@ -211,10 +227,12 @@ public class ChatBot {
     Scanner scanner = new Scanner(System.in);
 
     // Print initial greeting message (is this needed?)
-    System.out.println("Welcome to the chatbot program, type 'Hello, my name is abcdef.' to get started!");
+    System.out.println("Welcome to the chatbot program, to get started, type:");
+    System.out.println("  Hello, my name is <your name>.");
 
     while (true) {
       // 1. Get message from user
+      System.out.print("> ");
       String message = scanner.nextLine();
 
       // 2. Process the message and get a response
