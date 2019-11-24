@@ -16,6 +16,11 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>src/Bot Tester.java</name>
+			<type>1</type>
+			<location>//home/runner/Chat Bot/Bot Tester.java</location>
+		</link>
+		<link>
 			<name>src/Bot.java</name>
 			<type>1</type>
 			<location>/home/runner/Chat Bot/Bot.java</location>
@@ -29,6 +34,11 @@
 			<name>src/Main.java</name>
 			<type>1</type>
 			<location>/home/runner/Main.java</location>
+		</link>
+		<link>
+			<name>src/whiteboard.java</name>
+			<type>1</type>
+			<location>//home/runner/Chat Bot/whiteboard.java</location>
 		</link>
 	</linkedResources>
 </projectDescription>
