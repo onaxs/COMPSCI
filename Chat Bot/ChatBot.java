@@ -32,9 +32,9 @@ public class ChatBot {
   // given a string and a list of substring patterns to look for
   // return true of any of the patterns are in the string
   private Boolean matches(String message, String ... patterns) {
-    // for each pattern we're looking for
+    // for each pattern we're looking for 
     for (String pattern: patterns) {
-      // if the pattern is present in the string, return true
+      // if the pattern is present in the message, return true
       if (message.indexOf(pattern) > -1) {
         return true;
       }
