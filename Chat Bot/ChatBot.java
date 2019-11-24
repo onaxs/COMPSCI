@@ -18,6 +18,7 @@ public class ChatBot {
     
   // Info about the person chatting with the bot (updated via user msgs)
   private String user_name = "Mr. mystery person";
+  public Boolean user_wants_to_exit = 0;
 
   // Constructor
   public ChatBot(String n, String o, int a) {
@@ -86,9 +87,18 @@ public class ChatBot {
   }
 
   // How old are you?                             -> <age>
+  // Are you ___ years old?                       -> Yes/No
   private String parseBotAgeQuestion(String message) {
     if (matches(message, "old are you", "your age")) {
       return "I am " + bot_age + " years old.";
+    }
+    if (matches(message, "years old") && matches(message, "are you")) {
+      int asked_age = parseNumbers(message).get(0);
+      if (bot_age == asked_age) {
+        return "Yes.";
+      } else {
+        return "No.";
+      }
     }
     return null;
   }
@@ -101,9 +111,9 @@ public class ChatBot {
     }
     if (matches(message, "are you from ")) {
       if (matches(message, bot_origin.toLowerCase())) {
-        return "Yes";
+        return "Yes.";
       } else {
-        return "No";
+        return "No.";
       }
     }
     return null;
@@ -232,8 +242,11 @@ public class ChatBot {
 
     // Handle statements
     else {
-      // Hello, my name is <username>.                -> "Hello <username>. Nice to meet you"
+      // Hello, my name is <username>.                -> "Hello <username>. Nice to meet you."
       response = parseUserNameStatement(message);
+      if (response != null) {return response;}
+
+      response = parseGoodbyeStatement(message);
       if (response != null) {return response;}
     }
 
@@ -242,7 +255,7 @@ public class ChatBot {
   }
 
   /* **************************************************** */
-  public static void main(String[] args) {
+  public static int main(String[] args) {
     ChatBot bot = new ChatBot("Xano", "New York", 16);
     Scanner scanner = new Scanner(System.in);
 
