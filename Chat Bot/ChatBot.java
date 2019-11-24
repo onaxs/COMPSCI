@@ -35,24 +35,16 @@ public class ChatBot {
     return null;
   }
 
-  // return the number in the word before op_idx in message
-  private int parseNumBefore(String message, int op_idx) {
-    // 1. get position of last space before op_idx 
-    // 2. get the substring between last_space_idx and op_idx
-    // 3. return parseInt(last word)
-    int last_space_idx = message.lastIndexOf(" ", op_idx);
-    String number_str = message.substring(last_space_idx, op_idx);
-    return Integer.parseInt(number_str);
-  }
-
-  // return the number in the word after op_idx
-  private int parseNumAfter(String message, int op_idx) {
-    // 1. Find first space after op_indx
-    // 2. get substring of op_idx to first space after it
-    // 3. get integer of substring
-    int first_space_idx = message.indexOf(" ", op_idx);
-    String number_str = message.substring(op_idx, first_space_idx);
-    return Integer.parseInt(number_str);
+  // given a string containing some ints, return a list of the ints
+  private int[] parseNumbers(String message) {
+    // e.g. "123 abc 345 def 346. 989"
+    //  -> [123, 345, 346, 989]
+    Scanner scanner = new Scanner(message);
+    List<Integer> list = new ArrayList<Integer>();
+    while (scanner.hasNextInt()) {
+        list.add(scanner.nextInt());
+    }
+    return list;
   }
 
   /* **************************************************** */
@@ -115,37 +107,31 @@ public class ChatBot {
   private String parseMathQuestion(String message) {
     Integer answer = null;
     Integer op_idx = null;
+    int[] nums = parseNumbers(message);
+
+    // math questions must have exactly two integers in them, otherwise fail early
+    if (nums.length != 2) {return null;}
 
     // handle addition
-    op_idx = findOperator(message, " plus ", " + ");
-    if (op_idx != null) {
-      answer = parseNumBefore(message, op_idx) + parseNumAfter(message, op_idx);
+    if (findOperator(message, " plus ", " + ")) {
+      return "It is " + (nums[0] + nums[1]) + ".";
     };
 
     // handle subtraction
-    op_idx = findOperator(message, " minus ", " - ");
-    if (op_idx != null && answer != null) {
-      answer = parseNumBefore(message, op_idx) - parseNumAfter(message, op_idx);
+    if (findOperator(message, " minus ", " - ")) {
+      return "It is " + (nums[0] - nums[1]) + ".";
     }
 
     // handle multiplication
-    op_idx = findOperator(message, " times ", " multiplied by ", " * ", " x ");
-    if (op_idx != null && answer != null) {
-      answer = parseNumBefore(message, op_idx) * parseNumAfter(message, op_idx);
+    if (findOperator(message, " times ", " multiplied by ", " * ", " x ")) {
+      return "It is " + (nums[0] * nums[1]) + ".";
     }
 
     // handle division
-    op_idx = findOperator(message, " divided by ", " / ");
-    if (op_idx != null && answer != null) {
-      answer = parseNumBefore(message, op_idx) / parseNumAfter(message, op_idx);
+    if (findOperator(message, " divided by ", " / ")) {
+      return "It is " + (nums[0] / nums[1]) + ".";
     }
     
-    // if one of the math expression parsers succeeded and we have an answer
-    // return the correctly formatted answer response
-    if (answer != null) {
-      return "It is " + answer + ".";
-    }
-
     // otherwise return null response so we continue down the list in parse()
     // and try the next possible handler
     return null;
@@ -225,11 +211,11 @@ public class ChatBot {
     Scanner scanner = new Scanner(System.in);
 
     // Print initial greeting message (is this needed?)
-    // System.out.println("Welcome to the chatbot program, type 'Hello, my name is abcdef.' to get started!");
+    System.out.println("Welcome to the chatbot program, type 'Hello, my name is abcdef.' to get started!");
 
     while (true) {
       // 1. Get message from user
-      String message = scanner.next();
+      String message = scanner.nextLine();
 
       // 2. Process the message and get a response
       String response = bot.parse(message);
