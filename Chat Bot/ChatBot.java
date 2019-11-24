@@ -48,8 +48,13 @@ public class ChatBot {
     // e.g. "345xyz 346.1 989+343 2"
     //  -> [345, 346, 1, 989, 343, 2]
     List<Integer> list = new ArrayList<Integer>();
+
+    // scan the message and split it between any characters that arent digits
+    // see: https://stackoverflow.com/a/22936255/2156113
     Scanner line = new Scanner(message);
     line.useDelimiter("\\D+");
+
+    // loop through and add each int to the list
     while (line.hasNextInt()) {
       list.add(line.nextInt());
     }
@@ -145,9 +150,8 @@ public class ChatBot {
 
   // What is ____?                                -> "Not sure..."
   private String parseWhatQuestion(String message) {
-    // handle random question with suggestion to google it
     if (message.startsWith("what ")) {
-      return "Say 'what?' again motherfucker, I dare you " + user_name + "!";
+      return "You know I'm not allowed to answer that, " + user_name + ".";
     }
     return null;
   }
@@ -157,11 +161,20 @@ public class ChatBot {
     // handle unknown mesage by returning random funny response
     
     String[] random_funny_messages = {
-      "There’s a passage I got memorized.",
-      "The path of the righteous man is beset on all sides by the inequities of the selfish and the tyranny of evil men.",
-      "He is truly his brother’s keeper and the finder of lost children.",
-      "But that shit ain’t the truth.",
-      "English motherfucker, do you speak it?",
+      // lets play doctor
+      "And how does that make you feel?",
+      "Can you tell me a bit more about that?",
+      "And have you talked to your spouse about this?",
+
+      // lets play dumb
+      "Dumb it down a bit please, I'm not quite smart enough to understand that sort of thing yet...",
+      "You're really trying to push my intelligence limits...",
+      "Thank you very much for that info.",
+      
+      // lets be a snarky little robot
+      "Can we get back on topic, please?",
+      "And why do you think that's relevant?",
+      "Why do you think I'd care about that?"
     };
 
     java.util.Random random = new java.util.Random();
