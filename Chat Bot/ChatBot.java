@@ -32,7 +32,7 @@ public class ChatBot {
   // given a string and a list of substring patterns to look for
   // return true of any of the patterns are in the string
   private Boolean matches(String message, String ... patterns) {
-    // for each pattern we're looking for 
+    // for each pattern we're looking for in the list of possible patterns
     for (String pattern: patterns) {
       // if the pattern is present in the message, return true
       if (message.indexOf(pattern) > -1) {
@@ -49,7 +49,7 @@ public class ChatBot {
     //  -> [345, 346, 1, 989, 343, 2]
     List<Integer> list = new ArrayList<Integer>();
 
-    // scan the message and split it between any characters that arent digits
+    // scan the message and split by any characters that arent digits
     // see: https://stackoverflow.com/a/22936255/2156113
     Scanner line = new Scanner(message);
     line.useDelimiter("\\D+");
