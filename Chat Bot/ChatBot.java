@@ -14,7 +14,7 @@ public class ChatBot {
   // Constructor
   public ChatBot(String n, String o, int a) {
     bot_name = n;
-    bot_origin = l;
+    bot_origin = o;
     bot_age = a;
   }
 
@@ -27,7 +27,7 @@ public class ChatBot {
   // given a string and a list of substring patterns
   // look for the first occurence of each pattern and return the index of the first match
   // if none are found, return null
-  private Optional<int> findOperator(String message, String ... patterns) {
+  private Integer findOperator(String message, String ... patterns) {
     for (String pattern: patterns) {
       int idx = message.indexOf(pattern);
       if (idx > 0) {return idx;}
@@ -59,18 +59,19 @@ public class ChatBot {
   // Handlers for the different types of messages
 
   // Hello, my name is <username>.                -> "Hello <username>. Nice to meet you"
-  private Optional<String> parseUserNameStatement(String message) {
+  private String parseUserNameStatement(String message) {
     if (message.contains("Hello") || message.contains("Hi") && !isQuestion(message)) {
-      username = parseUsername(message);
+      // TODO: parse the users name
+      user_name = "Mr. Teacher person";
 
-      return "Hello " + username + ". Nice to meet you.";
+      return "Hello " + user_name + ". Nice to meet you.";
     }
     return null;
   }
 
   // What is your name?                           -> <name>
   // Can I have your name please?                 -> <name>
-  private Optional<String> parseBotNameQuestion(String message) {
+  private String parseBotNameQuestion(String message) {
     if (message.contains("name")
         || (message.contains("call")
             && message.contains("you"))) {
@@ -81,7 +82,7 @@ public class ChatBot {
   }
 
   // How old are you?                             -> <age>
-  private Optional<String> parseBotAgeQuestion(String message) {
+  private String parseBotAgeQuestion(String message) {
     if (message.contains("old") && message.contains("you")) {
       return "I was created in 2003 ... so 16.";
     }
@@ -90,7 +91,7 @@ public class ChatBot {
 
   // Where are you from?                          -> <location>
   // Are you from <location>?                     -> Yes/No
-  private Optional<String> parseBotOriginQuestion(String message) { 
+  private String parseBotOriginQuestion(String message) { 
     if (message.contains("you")) {
       if (message.contains("go")) {
         return "I return to ... the cloud";
@@ -111,31 +112,31 @@ public class ChatBot {
   // What is <num> <op> <num>?                    -> <answer>
   // What is the answer of <num> <op> <num>?      -> <answer>
   // Can you tell me what <num> <op> <num> is?    -> <answer>
-  private Optional<String> parseMathQuestion(String message) {
-    int answer;
-    int op_idx;
+  private String parseMathQuestion(String message) {
+    Integer answer = null;
+    Integer op_idx = null;
 
     // handle addition
     op_idx = findOperator(message, " plus ", " + ");
-    if (op_idx) {
+    if (op_idx != null) {
       answer = parseNumBefore(message, op_idx) + parseNumAfter(message, op_idx);
     };
 
     // handle subtraction
     op_idx = findOperator(message, " minus ", " - ");
-    if (op_idx && answer != null) {
-      answer = parseNumBefore(message, op_idx) - parseNumAfter(message, op_ix);
+    if (op_idx != null && answer != null) {
+      answer = parseNumBefore(message, op_idx) - parseNumAfter(message, op_idx);
     }
 
     // handle multiplication
     op_idx = findOperator(message, " times ", " multiplied by ", " * ", " x ");
-    if (op_idx && answer != null) {
-      answer = parseNumBefore(message, op_idx) * parseNumAfter(message, op_ix);
+    if (op_idx != null && answer != null) {
+      answer = parseNumBefore(message, op_idx) * parseNumAfter(message, op_idx);
     }
 
     // handle division
     op_idx = findOperator(message, " divided by ", " / ");
-    if (op_idx && answer != null) {
+    if (op_idx != null && answer != null) {
       answer = parseNumBefore(message, op_idx) / parseNumAfter(message, op_idx);
     }
     
@@ -151,9 +152,9 @@ public class ChatBot {
   }
 
   // What is ____?                                -> "Not sure..."
-  private Optional<String> parseWhatQuestion(String message) {
+  private String parseWhatQuestion(String message) {
     // handle random question with suggestion to google it
-    if (message.startswith("What ")) {
+    if (message.startsWith("What ")) {
       return "Say 'what?' again motherfucker, I dare you!";
     }
     return null;
@@ -182,37 +183,37 @@ public class ChatBot {
   // higher level method that parses the user's message
   // and returns a response using the first handler that matches
   public String parse(String message) {
-    Optional<String> response;
+    String response = null;
 
     // Try all of the various message handlers in order
 
     // Hello, my name is <username>.                -> "Hello <username>. Nice to meet you"
     response = parseUserNameStatement(message);
-    if (response) {return response;}
+    if (response != null) {return response;}
 
     // What is your name?                           -> <name>
     // Can I have your name please?                 -> <name>
     response = parseBotNameQuestion(message);
-    if (response) {return response;}
+    if (response != null) {return response;}
 
     // How old are you?                             -> <age>
     response = parseBotAgeQuestion(message);
-    if (response) {return response;}
+    if (response != null) {return response;}
 
     // Where are you from?                          -> <location>
     // Are you from <location>?                     -> Yes/No
     response = parseBotOriginQuestion(message);
-    if (response) {return response;}
+    if (response != null) {return response;}
 
     // What is <num> <op> <num>?                    -> <answer>
     // What is the answer of <num> <op> <num>?      -> <answer>
     // Can you tell me what <num> <op> <num> is?    -> <answer>
     response = parseMathQuestion(message);
-    if (response) {return mathResponse;}
+    if (response != null) {return response;}
 
     // What is ____?                                -> "Not sure..."
     response = parseWhatQuestion(message);
-    if (response) {return response;}
+    if (response != null) {return response;}
 
     // Uknown message                               -> random funny thing
     return parseUnknownMessage(message);

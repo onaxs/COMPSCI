@@ -7,3 +7,4 @@ public class DieTest{
 	  System.out.println(o1.equals(o2));
   }
 }
+*/
