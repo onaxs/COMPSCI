@@ -1,33 +1,21 @@
 import java.util.Scanner;
+import java.util.Random;
 
 public class ChatBot {
   // Info about the bot (never changed)
-  private String bot_name = "Xano";
-  private String bot_origin = "New York";
-	private int bot_age = 16;
-	
+  private String bot_name;
+  private String bot_origin;
+  private int bot_age = 16;
+    
   // Info about the person chatting with the bot
   // (updated once we learn their name)
-	public String user_name = "Mystery person";
+  private String user_name = "Mystery person";
 
   // Constructor
-  public ChatBot(String n, String l) {
-    name = n;
-    location = l;
-  }
-
-  /* **************************************************** */
-  // Response Generating Helpers
-  private String greeting() {
-    return "How may I be of assitance master?";
-  }
-
-  private String nameGreeting(String message) {
-    return "Hi " + getUsername() + " my name is Dobby";
-  }
-
-  private String goodBye(String message) {
-    return "farewell master " + getUsername();
+  public ChatBot(String n, String o, int a) {
+    bot_name = n;
+    bot_origin = l;
+    bot_age = a;
   }
 
   /* **************************************************** */
@@ -69,21 +57,40 @@ public class ChatBot {
 
   /* **************************************************** */
   // Handlers for the different types of messages
-  private String handleHelloGreeting(String message) {
+
+  // Hello, my name is <username>.                -> "Hello <username>. Nice to meet you"
+  private Optional<String> parseUserNameStatement(String message) {
     if (message.contains("Hello") || message.contains("Hi") && !isQuestion(message)) {
       username = parseUsername(message);
 
       return "Hello " + username + ". Nice to meet you.";
     }
+    return null;
   }
 
-  private String howQuestionHandler(String message) {
+  // What is your name?                           -> <name>
+  // Can I have your name please?                 -> <name>
+  private Optional<String> parseBotNameQuestion(String message) {
+    if (message.contains("name")
+        || (message.contains("call")
+            && message.contains("you"))) {
+
+      return "My name is Dobby the elf";
+    }
+    return null;
+  }
+
+  // How old are you?                             -> <age>
+  private Optional<String> parseBotAgeQuestion(String message) {
     if (message.contains("old") && message.contains("you")) {
       return "I was created in 2003 ... so 16.";
     }
+    return null;
   }
 
-  private String whereQuestionHandler(String message) { 
+  // Where are you from?                          -> <location>
+  // Are you from <location>?                     -> Yes/No
+  private Optional<String> parseBotOriginQuestion(String message) { 
     if (message.contains("you")) {
       if (message.contains("go")) {
         return "I return to ... the cloud";
@@ -98,18 +105,13 @@ public class ChatBot {
         return "I am currently in the cloud above you";
       }
     }
+    return null;
   }
 
-  private String handleNameQuestion(String message) {
-    if (message.contains("name")
-        || (message.contains("call")
-            && message.contains("you"))) {
-
-      return "My name is Dobby the elf";
-    }
-  }
-
-  private String handleMathQuestion(String message) {
+  // What is <num> <op> <num>?                    -> <answer>
+  // What is the answer of <num> <op> <num>?      -> <answer>
+  // Can you tell me what <num> <op> <num> is?    -> <answer>
+  private Optional<String> parseMathQuestion(String message) {
     int answer;
     int op_idx;
 
@@ -148,7 +150,8 @@ public class ChatBot {
     return null;
   }
 
-  private String parseWhatQuestion(String message) {
+  // What is ____?                                -> "Not sure..."
+  private Optional<String> parseWhatQuestion(String message) {
     // handle random question with suggestion to google it
     if (message.startswith("What ")) {
       return "Say 'what?' again motherfucker, I dare you!";
@@ -156,6 +159,7 @@ public class ChatBot {
     return null;
   }
 
+  // Uknown message                               -> random funny thing
   private String parseUnknownMessage(String message) {
     // handle unknown mesage by returning random funny response
     
@@ -216,7 +220,7 @@ public class ChatBot {
 
   /* **************************************************** */
   public static void main(String[] args) {
-	  ChatBot bot = new ChatBot();
+    ChatBot bot = new ChatBot("Xano", "New York", 16);
     Scanner scanner = new Scanner(System.in);
 
     // Print initial greeting message (is this needed?)
