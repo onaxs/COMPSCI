@@ -45,8 +45,8 @@ public class ChatBot {
 
   // given a string containing some ints, return a list of the ints
   private List<Integer> parseNumbers(String message) {
-    // e.g. "123 abc 345 def 346. 989"
-    //  -> [123, 345, 346, 989]
+    // e.g. "345xyz 346.1 989+343 2"
+    //  -> [345, 346, 1, 989, 343, 2]
     List<Integer> list = new ArrayList<Integer>();
     Scanner line = new Scanner(message);
     line.useDelimiter("\\D+");
@@ -109,8 +109,7 @@ public class ChatBot {
   // Can you tell me what <num> <op> <num> is?    -> <answer>
   private String parseMathQuestion(String message) {
     List<Integer> nums = parseNumbers(message);
-    int a;
-    int b;
+    int a, b;
 
     // math questions must have exactly two integers in them
     if (nums.size() == 2) {
@@ -122,22 +121,22 @@ public class ChatBot {
     }
     
     // handle addition
-    if (matches(message, " plus ", " + ")) {
+    if (matches(message, " plus ", "+")) {
       return "It is " + (a + b) + ", " + user_name + ".";
     };
 
     // handle subtraction
-    if (matches(message, " minus ", " - ")) {
+    if (matches(message, " minus ", "-")) {
       return "It is " + (a - b) + ", " + user_name + ".";
     }
 
     // handle multiplication
-    if (matches(message, " times ", " multiplied by ", " * ", " x ")) {
+    if (matches(message, " times ", " multiplied by ", "*")) {
       return "It is " + (a * b) + ", " + user_name + ".";
     }
 
     // handle division
-    if (matches(message, " divided by ", " / ")) {
+    if (matches(message, " divided by ", "/")) {
       return "It is " + (a / b) + ", " + user_name + ".";
     }
     
@@ -225,7 +224,7 @@ public class ChatBot {
       if (response != null) {return response;}
     }
 
-    // Handle nnknown messages
+    // Handle unknown messages
     return parseUnknownMessage(message);
   }
 
