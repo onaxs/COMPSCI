@@ -1,4 +1,3 @@
-/*
 import java.util.Scanner;
 public class ChatbotRunner
 {
@@ -10,9 +9,8 @@ public class ChatbotRunner
     
     System.out.println(me.greeting());
     
-    String answer = "";
-    String question;
-    while(!answer.toLowerCase().trim().equals("bye")){
+    String question = "";
+    while(!question.toLowerCase().trim().equals("bye")){
       question = keyboard.nextLine();
       System.out.println("User: " + question);
       System.out.println("Bot: " + me.response(question));
@@ -20,4 +18,3 @@ public class ChatbotRunner
     }
   }
 }
-*/

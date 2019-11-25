@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 
-public class ChatBot {
+public class Chatbot {
   // Info about the bot (static after class init)
   private String bot_name;
   private String bot_origin;
@@ -18,13 +18,13 @@ public class ChatBot {
     
   // Info about the person chatting with the bot (updated via user msgs)
   private String user_name = "Mr. mystery person";
-  public Boolean user_wants_to_exit = 0;
+  private String user_place = "mystery place";
 
   // Constructor
-  public ChatBot(String n, String o, int a) {
-    bot_name = n;
-    bot_origin = o;
-    bot_age = a;
+  public Chatbot() {
+    bot_name = "Xano";
+    bot_origin = "New York";
+    bot_age = 16;
   }
 
   /* **************************************************** */
@@ -79,7 +79,15 @@ public class ChatBot {
 
   // What is your name?                           -> <name>
   // Can I have your name please?                 -> <name>
+  // Is your name ____?                           -> Yes/No
   private String parseBotNameQuestion(String message) {
+    if (message.startsWith("is your name ")) {
+      if (matches(message, bot_name.toLowerCase())) {
+        return "Yes.";
+      } else {
+        return "No.";
+      }
+    }
     if (matches(message, "your name", "what should I call you")) {
       return "My name is " + bot_name + ".";
     }
@@ -87,6 +95,7 @@ public class ChatBot {
   }
 
   // How old are you?                             -> <age>
+  // What's your age?                             -> <age>
   // Are you ___ years old?                       -> Yes/No
   private String parseBotAgeQuestion(String message) {
     if (matches(message, "old are you", "your age")) {
@@ -104,6 +113,7 @@ public class ChatBot {
   }
 
   // Where are you from?                          -> <location>
+  // Where were you born?                         -> <location>
   // Are you from <location>?                     -> Yes/No
   private String parseBotOriginQuestion(String message) { 
     if (matches(message, "where are you from", "where were you born")) {
@@ -120,7 +130,7 @@ public class ChatBot {
   }
 
   // What is <num> <op> <num>?                    -> <answer>
-  // What is the answer of <num> <op> <num>?      -> <answer>
+  // What is the answer of <num><op><num>?        -> <answer>
   // Can you tell me what <num> <op> <num> is?    -> <answer>
   private String parseMathQuestion(String message) {
     List<Integer> nums = parseNumbers(message);
@@ -192,6 +202,14 @@ public class ChatBot {
     return random_funny_messages[random_idx];
   }
 
+  // Goodbye message                            -> System.exit(0)
+  private void parseGoodbyeStatement(String message) {
+    if (message.startsWith("goodbye") || message.startsWith("bye ")) {
+      System.out.println("Goodbye, " + user_name + ".");
+      System.exit(0);
+    }
+  }
+
   /* **************************************************** */
   // higher level method that parses the user's message
   // and returns a response using the first handler that matches
@@ -246,33 +264,23 @@ public class ChatBot {
       response = parseUserNameStatement(message);
       if (response != null) {return response;}
 
-      response = parseGoodbyeStatement(message);
-      if (response != null) {return response;}
+      // Goodbye.                                     -> System.exit(0)
+      parseGoodbyeStatement(message);
     }
 
     // Handle unknown messages
     return parseUnknownMessage(message);
   }
 
-  /* **************************************************** */
-  public static int main(String[] args) {
-    ChatBot bot = new ChatBot("Xano", "New York", 16);
-    Scanner scanner = new Scanner(System.in);
 
-    // Print initial greeting message (is this needed?)
-    System.out.println("Welcome to the chatbot program, to get started, type:");
-    System.out.println("  Hello, my name is <your name>.");
 
-    while (true) {
-      // 1. Get message from user
-      System.out.print("> ");
-      String message = scanner.nextLine();
-
-      // 2. Process the message and get a response
-      String response = bot.parse(message);
-
-      // 3. Print the response and repeat
-      System.out.println(response);
-    }
+  public String response(String message) {
+    return this.parse(message);
   }
+
+  public String greeting() {
+    return "Welcome to the chatbot program, to get started, type: \n  Hello, my name is <your name>.";
+  }
+
 }
+    
