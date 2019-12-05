@@ -14,4 +14,91 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>src/BankAccount.java</name>
+			<type>1</type>
+			<location>//home/runner/BankAccount.java</location>
+		</link>
+		<link>
+			<name>src/Bot Tester.java</name>
+			<type>1</type>
+			<location>/home/runner/Chat Bot/Bot Tester.java</location>
+		</link>
+		<link>
+			<name>src/Bot.java</name>
+			<type>1</type>
+			<location>/home/runner/Chat Bot/Bot.java</location>
+		</link>
+		<link>
+			<name>src/ChatBot.java</name>
+			<type>1</type>
+			<location>/home/runner/Chat Bot/ChatBot.java</location>
+		</link>
+		<link>
+			<name>src/Clock.java</name>
+			<type>1</type>
+			<location>//home/runner/Clock.java</location>
+		</link>
+		<link>
+			<name>src/Coin.java</name>
+			<type>1</type>
+			<location>//home/runner/Coin.java</location>
+		</link>
+		<link>
+			<name>src/CoinTester.java</name>
+			<type>1</type>
+			<location>//home/runner/CoinTester.java</location>
+		</link>
+		<link>
+			<name>src/Complex.java</name>
+			<type>1</type>
+			<location>//home/runner/Complex.java</location>
+		</link>
+		<link>
+			<name>src/Die.java</name>
+			<type>1</type>
+			<location>//home/runner/Die.java</location>
+		</link>
+		<link>
+			<name>src/Fraction.java</name>
+			<type>1</type>
+			<location>//home/runner/Labs/Fraction Lab/Fraction.java</location>
+		</link>
+		<link>
+			<name>src/Main.java</name>
+			<type>1</type>
+			<location>/home/runner/Main.java</location>
+		</link>
+		<link>
+			<name>src/Quadrilateral.java</name>
+			<type>1</type>
+			<location>//home/runner/Labs/Inheritance project/Quadrilateral.java</location>
+		</link>
+		<link>
+			<name>src/Rectangle.java</name>
+			<type>1</type>
+			<location>//home/runner/Labs/Inheritance project/Rectangle.java</location>
+		</link>
+		<link>
+			<name>src/Square.java</name>
+			<type>1</type>
+			<location>//home/runner/Labs/Inheritance project/Square.java</location>
+		</link>
+		<link>
+			<name>src/WholeNum.java</name>
+			<type>1</type>
+			<location>//home/runner/Labs/Fraction Lab/WholeNum.java</location>
+		</link>
+		<link>
+			<name>src/leapYearCalculator.java</name>
+			<type>1</type>
+			<location>//home/runner/leapYearCalculator.java</location>
+		</link>
+		<link>
+			<name>src/whiteboard.java</name>
+			<type>1</type>
+			<location>/home/runner/Chat Bot/whiteboard.java</location>
+		</link>
+	</linkedResources>
 </projectDescription>
