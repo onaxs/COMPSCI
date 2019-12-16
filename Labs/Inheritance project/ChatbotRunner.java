@@ -1,9 +1,7 @@
 import java.util.Scanner;
-public class ChatbotRunner
-{
-  public static void main(String[] args){
+public class ChatbotRunner {
+  public static void main(String[] args) {
     Scanner keyboard = new Scanner(System.in);
-    
     //Add your information directly to the Chatbot instant variables
     Chatbot me = new Chatbot();
     
