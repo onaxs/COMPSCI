@@ -1,4 +1,4 @@
-import java.awt.Color;
+ import java.awt.Color;
 
 /**
  * Class that references a pixel in a picture. Pixel 

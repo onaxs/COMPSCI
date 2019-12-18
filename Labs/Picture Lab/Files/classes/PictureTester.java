@@ -15,11 +15,11 @@ public class PictureTester
     // uncomment a call here to run a test
     // and comment out the ones you don't want
     // to run
-    testZeroBlue();
+    //testZeroBlue();
     //testGreenOnly();
     //testNegate();
     //testGrayscale();
-    //testEnhanceFish();
+    testEnhanceFish();
     //testEdgeDetection();
     
     //testMirrorVertical();
@@ -29,9 +29,9 @@ public class PictureTester
     //testCopyGull();    
     //testCreateCollage();
     
-    //testChromakey();
-    //testDecode();
-    //testEncodeGreen();
+    testChromakey();
+    testDecode();
+    testEncodeGreen();
   }
   
   /** Method to test zeroBlue */
@@ -172,5 +172,6 @@ public class PictureTester
     beach.encodeGreen(text);
     beach.write("encodeGreen.bmp");
     beach.explore();
+    beach.decodeGreen();
   }
 }
